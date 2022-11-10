@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  cloudfriends:
+    image: cloudfriends
+    ports:
+      - 8000:8000
+    environment:
+      - DBNAME=friends
+      - DBHOST=test-rg-db.postgres.database.azure.com
+      - DBUSER=testadmin@test-rg-db
+      - DBPASS=Password-123

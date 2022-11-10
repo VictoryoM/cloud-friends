@@ -97,8 +97,5 @@ git push azuretask main:master
 
 # TASK 1
 
-create rg TASK1
-PostrgeSQL Managed DB
-
-
-
+1. create rg TASK1
+2. PostrgeSQL Managed DB
