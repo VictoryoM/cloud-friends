@@ -94,8 +94,24 @@ DBPASS
 git push azuretask main:master
 ```
 
-
 # TASK 1
 
 1. create rg TASK1
 2. PostrgeSQL Managed DB
+
+```sh
+
+sudo apt install python3 python3-pip python3.8-venv docker-compose -y
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+nano .env
+```
+
+*Modify the environment variables*
+
+
+```sh
+python3 manage.py migrate
+```
