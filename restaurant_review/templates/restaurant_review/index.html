@@ -47,29 +47,27 @@
   <h1>Class Mate Reviews</h1>
 
   {% if restaurants %}
-      <table class="table">
-          <thead style="color: #EEE;">
-              <tr>
-                  <th>Name</th>
-                  <th>Rating</th>
-                  <th class="text-end">Friend References</th>
-              </tr>
-          </thead>
-          <tbody style="color: #EEE;">
-              {% for restaurant in restaurants %}
-                  <tr>
-                      <td>{{ restaurant.name }}</td>
-                      <td>{% star_rating restaurant.avg_rating restaurant.review_count   %}   </td>
-                      <td class="text-end"><a href="{% url 'details' restaurant.id %}" class="btn btn-sm btn-primary">Check</a></td>
-                  </tr>
-              {% endfor %}
-          </tbody>
-      </table>
+  <div class="row">
+    {% for restaurant in restaurants %}
+    <div class="col-md-4 my-4">
+      <div class="col m-1 p-2 rounded-3 shadow-lg bg-dark h-100">
+        <div class="text-center ">
+      <p class="fs-2">{{ restaurant.name }}</p> {% star_rating restaurant.avg_rating restaurant.review_count   %}
+        </div>
+      <hr>
+      <div class="d-flex justify-content-around align-items-center">
+        Total references = {{restaurant.review_count}}
+        <a href="{% url 'details' restaurant.id %}" class="btn btn-sm btn-info">Check</a>
+      </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
   {% else %}
       <p>You have no friend :(:(:(:(:(.</p>
   {% endif %}
 
   <div class="d-flex justify-content-end">
-          <a href="{% url 'create_restaurant' %}" class="btn btn-success px-4 gap-3">Yeah, new friend.</a>
+          <a href="{% url 'create_restaurant' %}" class="btn btn-warning px-4 gap-3">Yeah, new friend.</a>
   </div>
 {% endblock %}
