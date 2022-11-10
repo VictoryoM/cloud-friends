@@ -7,6 +7,8 @@
       body {
           min-height: 75rem;
           padding-top: 4.5rem;
+          background-color: #333;
+          color: #EEE;
       }
 
       .score {
@@ -42,7 +44,7 @@
   </style>
 {% endblock %}
 {% block content %}
-  <h1>Restaurants</h1>
+  <h1>Class Mate Reviews</h1>
 
   {% if restaurants %}
       <table class="table">
@@ -64,10 +66,10 @@
           </tbody>
       </table>
   {% else %}
-      <p>No restaurants exist.  Select Add new restaurant to add one.</p>
+      <p>You have no friend :(:(:(:(:(.</p>
   {% endif %}
 
   <div class="d-flex justify-content-end">
-          <a href="{% url 'create_restaurant' %}" class="btn btn-success px-4 gap-3">Add new restaurant</a>
+          <a href="{% url 'create_restaurant' %}" class="btn btn-success px-4 gap-3">Yeah, new friend.</a>
   </div>
 {% endblock %}
