@@ -1,18 +1,104 @@
-# Deploy a Python (Django) web app with PostgreSQL in Azure
+# Task 3
 
-This is a Python web app using the Django framework and the Azure Database for PostgreSQL relational database service. The Django app is hosted in a fully managed Azure App Service. This app is designed to be be run locally and then deployed to Azure. For more information on how to use this web app, see the tutorial [*Deploy a Python (Django or Flask) web app with PostgreSQL in Azure*](https://docs.microsoft.com/en-us/azure/app-service/tutorial-python-postgresql-app).
+```ps
+az group create --name task3 --location koreacentral
+```
+```ps
+az container create --resource-group task3 --name container --image docker/getting-started --dns-name-label task3victoryo --ports 80
+```
 
-If you need an Azure account, you can [create on for free](https://azure.microsoft.com/free/).
+```ps
+az storage account create --name stracctask3 --resource-group task3 --location koreacentral --sku Standard_RAGRS --kind StorageV2
+```
 
-A Flask sample application is also available for the article at https://github.com/Azure-Samples/msdocs-flask-postgresql-sample-app.
 
-## Requirements
+# Task 2
+1. create az rg 
+2. PostrgeSQL Managed DB //dbtask2
+3. create vm staging with a public ip //vm-admin Verysecret-123
+4. create web app // using py 3.9 //wa-task2 Verysecret-123
 
-The [requirements.txt](./requirements.txt) has the following packages:
+5. it will create App Serivce
 
-| Package | Description |
-| ------- | ----------- |
-| [Django](https://pypi.org/project/Django/) | Web application framework. |
-| [pyscopg2-binary](https://pypi.org/project/psycopg-binary/) | PostgreSQL database adapter for Python. |
-| [python-dotenv](https://pypi.org/project/python-dotenv/) | Read key-value pairs from .env file and set them as environment variables. In this sample app, those variables describe how to connect to the database locally. <br><br> This package is used in the [manage.py](./manage.py) file to load environment variables. |
-| [whitenoise](https://pypi.org/project/whitenoise/) | Static file serving for WSGI applications, used in the deployed app. <br><br> This package is used in the [azureproject/production.py](./azureproject/production.py) file, which configures production settings. |
+### vm-staging
+
+```sh
+sudo apt-get update && sudo apt-get upgrade -y
+```
+```sh
+sudo apt-get install postgresql-client
+```
+
+6. Allow Azure connections to SQL Server
+   - connection security - YES
+7. Get the connection string (psql)
+   - psql "host=db-lab2.postgres.database.azure.com port=5432 dbname=postgres user=dbadmin@db-lab2 password=Verysecret-123 sslmode=require"
+
+8. VM_STAGING COMMAND
+```sh
+CREATE DATABASE friends;
+\q
+mkdir django-app
+cd django-app
+git clone https://github.com/VictoryoM/cloud-friends.git
+cd msdocs-django-postgresql-sample-app
+sudo apt-get install python3.8-venv
+python3 -m venv .venv
+source .venv/bin/activate
+editor requirements.txt
+```
+
+`pip install -r requirements.txt` // change django to d lowercase
+```sh
+editor .env
+DBNAME=friends
+DBHOST=<database-hostname>
+DBUSER=<db-user-name>
+DBPASS=<db-password>
+
+
+python manage.py migrate
+python manage.py runserver
+```
+
+9. Create the environmental variables in the app service
+    - //Configuration > New App Setting
+    - Name:
+     DBNAME
+    - Value:
+     friends
+    - Name:
+     DBHOST
+    - Value:
+     (DB Server Name) //Remove '.postgres.database.azure.com'
+
+    - Name:
+DBUSER
+    - Value:
+{DB Admin Username}
+
+    - Name:
+DBPASS
+    - Value:
+{DB Password}
+
+10. set local git
+11. set password for credential
+12. //Web App > Deployment Center > Source = local git
+13. get url (git clone url)
+
+
+`git remote add azuretask` URL 
+
+```sh
+git push azuretask main:master
+```
+
+
+# TASK 1
+
+create rg TASK1
+PostrgeSQL Managed DB
+
+
+
